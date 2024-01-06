@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
@@ -8,7 +8,7 @@ urlpatterns = [
     # route is a string contains a URL pattern
     # view refers to the view function
     # name the URL
-
+   
     # path for about view
 
     # path for contact us view
@@ -18,7 +18,9 @@ urlpatterns = [
     # path for login
 
     # path for logout
-
+    path('about/', view=views.about, name='about'),
+    path('contact/', view=views.contact, name='contact'),
+    
     path(route='', view=views.get_dealerships, name='index'),
 
     # path for dealer reviews view
