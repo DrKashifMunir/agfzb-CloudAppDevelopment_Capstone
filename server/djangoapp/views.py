@@ -121,8 +121,9 @@ def get_dealer_details(request, dealer_id):
 def add_review(request, dealer_id):
     if request.method == "POST":
         user = request.user
-
+        print("here 1")
         if user.is_authenticated:
+            print("here 2")
             url = "https://kashifmunir-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/review"
         
             review = dict()
