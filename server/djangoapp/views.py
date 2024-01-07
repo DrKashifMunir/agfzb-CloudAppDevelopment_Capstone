@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
 
 from .models import CarMake, CarModel, CarDealer, DealerReview
-from .restapis import get_request, get_dealers_from_cf
+from .restapis import get_request, get_dealers_from_cf, get_dealer_reviews_from_cf, post_request
 
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
@@ -92,7 +92,9 @@ def get_dealerships(request):
         # Get dealers from the URL
         dealerships = get_dealers_from_cf(url)
         # Concat all dealer's short name
+        
         dealer_names = ' '.join([dealer.short_name for dealer in dealerships])
+        dealer_names = "Dealers are: " +  dealer_names
         # Return a list of dealer short name
         return HttpResponse(dealer_names)
 
@@ -103,10 +105,36 @@ def get_dealerships(request):
 
 
 # Create a `get_dealer_details` view to render the reviews of a dealer
-# def get_dealer_details(request, dealer_id):
-# ...
+def get_dealer_details(request, dealer_id):
+    if request.method == "GET":
+        url = "https://kashifmunir-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/review"
+        # Get dealers from the URL
+        reviews = get_dealer_reviews_from_cf(url, dealer_id)
+        # Concat all dealer's short name
+        
+        reviews_sentiments = ' '.join([review.sentiment for review in reviews])
+        reviews_sentiments = "Reviews for this dealer are: " + reviews_sentiments
+        # Return a list of dealer short name
+        return HttpResponse(reviews_sentiments)
 
 # Create a `add_review` view to submit a review
-# def add_review(request, dealer_id):
-# ...
+def add_review(request, dealer_id):
+    if request.method == "POST":
+        user = request.user
 
+        if user.is_authenticated:
+            url = "https://kashifmunir-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/review"
+        
+            review = dict()
+            review["time"] = datetime.utcnow().isoformat()
+            review["name"] = request.POST['name']
+            review["dealership"] = request.POST['dealership']
+            review["review"] = request.POST['review']
+
+            json_payload = dict()
+            json_payload["review"] = review
+
+        # Get dealer from the URL
+            response = post_request(url, json_payload)
+            return HttpResponse(response)
+    
