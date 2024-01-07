@@ -93,7 +93,6 @@ app.get('/review', (req, res) => {
 
     const queryOptions = {
         selector,
-        limit: 10, // Limit the number of documents returned to 10
     };
 
     db2.find(queryOptions, (err, body) => {
@@ -110,28 +109,28 @@ app.get('/review', (req, res) => {
 
 // Define a route to post a review
 app.post('/review', (req, res) => {
-    const {review} = req.body;
-
-    // Create a selector object based on query parameters
+    const { id, name, dealership, review, purchase, another, purchase_date, car_make, car_model, car_year } = req.body;
 
     // Validate required parameters
     if (!review) {
         return res.status(400).json({ error: 'Invalid request. Review is required.' });
     }
-    
+
     // Create the document to be added to the database
     const reviewDocument = {
-        id: review.id,
-        name: review.name,
-        dealership: parseInt(review.dealership),
-        review: review.review,
-        purchase: review.purchase || false,
-        another: review.another,
-        purchase_date: review.purchase_date,
-        car_make: review.car_make,
-        car_model: review.car_model,
-        car_year: review.car_year,
+        id: id,
+        name: name,
+        dealership: parseInt(dealership),
+        review: review,
+        purchase: purchase || false,
+        another: another,
+        purchase_date: purchase_date,
+        car_make: car_make,
+        car_model: car_model,
+        car_year: car_year,
     };
+
+    console.log(reviewDocument)
 
     // Insert the document into the database
     db2.insert(reviewDocument, (err, body) => {
