@@ -69,7 +69,7 @@ def get_dealer_reviews_from_cf(url,dealer_id, **kwargs):
         dealers = json_result
         # For each dealer object
         for dealer_doc in dealers:
-            if dealer_id ==  dealer_doc.get("id"):  
+            if dealer_id ==  dealer_doc.get("dealership"):  
                 print(dealer_doc)
                 dealer_review_obj = DealerReview(
                     id=dealer_doc.get("id", ""),
