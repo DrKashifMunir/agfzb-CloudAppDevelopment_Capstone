@@ -40,51 +40,52 @@
                 </ul>
             </div>
         </nav>        
-    <!--Add review form here -->
-    <h3> Add a review about {{ dealer }}</h3>
-    <h4> Enter the review content:</h4>
-    <div class="container mt-5">
-        <form class="form-inline" action="{% url 'djangoapp:add_review' dealer_id%}" method="post">
+        <!--Add review form here -->
+        <h3> Add a review about <b>{{ dealer }}</b></h3>
+    
+        <div class="container mt-5">
+            <form action="{% url 'djangoapp:add_review' dealer_id%}" method="post">
             {% csrf_token %}
-            <!-- Review Content -->
-            <div class="mb-3">
-                <label for="content" class="form-label">Review Content</label>
-                <textarea class="form-control" id="content" name="content" rows="2" style="width: 100%;" required></textarea>
-            </div>
+            
+                <!-- Review Content -->
+                <div class="mb-3">
+                    <label for="content" class="form-label"> <h4> Enter the review content:</h4></label>
+                    <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+                </div>
+    
+                <!-- Purchase Checkbox -->
+                <div class="mb-3">
+                    <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                    <label class="form-check-label" for="purchasecheck"><h5>Has purchased the car from {{ dealer }}?</h5></label>
+                    <label class="text-muted">(select purchased car information below if checked)</label>               
+                </div>
+    
+                <!-- Car Dropdown -->
+                <div class="mb-3">
+                    <label for="car" class="form-label"><b>Select your car (model-make-year):</b> </label>
+                    <select name="car" id="car" class="form-select" required>
+                        {% for car in cars %}
+                            <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Purchase Date -->
+                <div class="mb-3">
+                    <label for="purchasedate"><b>Select Your Purchase Date: </b></label>
+                    <input class="date-own form-control" style="width: 300px;" type="text" name="purchasedate" id="purchasedate">
+                </div>
 
-            <!-- Purchase Checkbox -->
-            <div class="mb-3 form-check">
-                <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
-                <label class="form-check-label" for="purchasecheck">Have you purchased the car from {{ dealer }}? (select purchased car information if checked)</label>
-            </div>
+                <!-- Submit Button -->
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
 
-            <!-- Car Dropdown -->
-            <div class="mb-3">
-                <label for="car" class="form-label">Select your car (model-make-year): </label>
-                <select name="car" id="car" class="form-select" required>
-                    {% for car in cars %}
-                        <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-             <!-- Purchase Date -->
-             <div class="mb-4">          
-                <p> Select your purchase date: </p>
-                <input class="date-own form-control" type="text" name="purchasedate" id="purchasedate">
-                <script type="text/javascript">
-                    $('.date-own').datepicker({
-                    format: 'mm/dd/yyyy'
-                    });
-                </script>
-            </div>
-
-            <!-- Submit Button -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-    </div>
-
-    <!-- Bootstrap JS and Popper.js scripts (make sure to replace with the correct paths) -->
-    <script src="path/to/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="path/to/popper.min.js"></script>    
+            </form>
+        </div>
     </body>
+    <script type="text/javascript">
+        $('.date-own').datepicker({
+           format: 'mm/dd/yyyy'
+         });
+   </script>    
 </html>

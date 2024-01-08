@@ -84,7 +84,6 @@ app.get('/dealership', (req, res) => {
 // Define a route to get all reviews with optional dealership ID filter
 app.get('/review', (req, res) => {
     const {dealership} = req.query;
-
     // Create a selector object based on query parameters
     const selector = {};
     if (dealership) {
@@ -109,8 +108,9 @@ app.get('/review', (req, res) => {
 
 // Define a route to post a review
 app.post('/review', (req, res) => {
+    console.log("here")
     const { id, name, dealership, review, purchase, another, purchase_date, car_make, car_model, car_year } = req.body;
-
+    
     // Validate required parameters
     if (!review) {
         return res.status(400).json({ error: 'Invalid request. Review is required.' });

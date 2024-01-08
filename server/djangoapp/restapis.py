@@ -9,13 +9,17 @@ from ibm_watson.natural_language_understanding_v1 import Features, SentimentOpti
 
 def post_request(url, json_payload, **kwargs):
     print("POST from {} ".format(url))
+    response = {}
+    print(json_payload['review'])
     try:
         # Call POST method of requests library with URL and parameters
-        response = requests.post(url, params=kwargs, json=json_payload)
+        #response = requests.post(url, data=json_payload['review'], headers={'Content-Type': 'application/json'})
+        status_code = response.status_code
+        print(response.status_code)
     except:
         # If any error occurs
         print("Network exception occurred")
-    status_code = response.status_code
+    
     print("With status {} ".format(status_code))
     json_data = json.loads(response.text)
     return json_data
