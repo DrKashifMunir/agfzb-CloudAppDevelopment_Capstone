@@ -90,7 +90,7 @@ def get_dealer_reviews_from_cf(url,dealer_id, **kwargs):
 def analyze_review_sentiments(dealerreview):
 
     url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/db7ddfa4-a0ad-42f1-ae80-fed8e799e08f/v1/analyze?version=2022-04-07"
-    api_key = ""
+    api_key = "cGfuZXrcdC8nDv3oqb7WYWZdeWG144_eMc9dd1J2UbiT"
     headers = {
         "Content-Type": "application/json",
     }

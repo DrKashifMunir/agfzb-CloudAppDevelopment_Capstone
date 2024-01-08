@@ -134,17 +134,14 @@ def add_review(request, dealer_id):
     if request.method == "GET":
         user = request.user
         if user.is_authenticated:
-            #url = "https://kashifmunir-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/review"
-            #review = dict()
-            #review["time"] = datetime.utcnow().isoformat()
-            #review["name"] = request.POST['name']
-            #review["dealership"] = request.POST['dealership']
-            #review["review"] = request.POST['review']
-            #json_payload = dict()
-            #json_payload["review"] = review
-        # Get dealer from the URL
-            #response = post_request(url, json_payload)
-            #return HttpResponse(response)
+            url = "https://kashifmunir-3000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/dealership"
+            dealerships = get_dealers_from_cf(url)
+            dealer_name=""
             context = {}
+            for dealer in dealerships:
+                if dealer.id == dealer_id:
+                    dealer_name = dealer.full_name
+            context ['dealer'] = dealer_name
+            context ['dealer_id'] = dealer_id
             return render(request, 'djangoapp/add_review.html', context)
     
