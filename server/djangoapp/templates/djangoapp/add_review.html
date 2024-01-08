@@ -12,6 +12,51 @@
 </head>
     <body>
     <!--Add review form here -->
-    
+    <div class="container mt-5">
+        <form class="form-inline" action="{% url 'djangoapp:add_review' dealer_id%}" method="post">
+            {% csrf_token %}
+            <!-- Review Content -->
+            <div class="mb-3">
+                <label for="content" class="form-label">Review Content</label>
+                <textarea class="form-control" id="content" name="content" rows="2" required></textarea>
+            </div>
+
+            <!-- Purchase Checkbox -->
+            <div class="mb-3 form-check">
+                <input class="form-check-input" type="checkbox" name="purchasecheck" id="purchasecheck">
+                <label class="form-check-label" for="purchasecheck">Have you purchased a car from this dealer before?</label>
+            </div>
+
+            <!-- Car Dropdown -->
+            <div class="mb-3">
+                <label for="car" class="form-label">Select a Car Owned by this Dealer</label>
+                <select name="car" id="car" class="form-select" required>
+                    <!-- Replace the following options with cars fetched from Django admin site -->
+                    <option value="car1">Toyota Camry (2022)</option>
+                    <option value="car2">Honda Accord (2021)</option>
+                    <option value="car3">Ford Mustang (2020)</option>
+                </select>
+            </div>
+            
+            <select name="car" id="car" class="form-select" required>
+                {% for car in cars %}
+                    <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                {% endfor %}
+            </select>
+           
+            <script type="text/javascript">
+                $('.date-own').datepicker({
+                format: 'mm/dd/yyyy'
+                });
+            </script>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js scripts (make sure to replace with the correct paths) -->
+    <script src="path/to/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="path/to/popper.min.js"></script>    
     </body>
 </html>
