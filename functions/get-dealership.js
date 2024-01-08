@@ -108,7 +108,6 @@ app.get('/review', (req, res) => {
 
 // Define a route to post a review
 app.post('/review', (req, res) => {
-    console.log("here")
     const { id, name, dealership, review, purchase, another, purchase_date, car_make, car_model, car_year } = req.body;
     
     // Validate required parameters
