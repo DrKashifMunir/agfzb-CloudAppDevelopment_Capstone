@@ -9,21 +9,18 @@ from ibm_watson.natural_language_understanding_v1 import Features, SentimentOpti
 
 def post_request(url, json_payload, **kwargs):
     print("POST from {} ".format(url))
-    response = {}
-    print(json_payload['review'])
-    try:
-        # Call POST method of requests library with URL and parameters
-        #response = requests.post(url, data=json_payload['review'], headers={'Content-Type': 'application/json'})
-        status_code = response.status_code
-        print(response.status_code)
-    except:
-        # If any error occurs
-        print("Network exception occurred")
-    
-    print("With status {} ".format(status_code))
+    data = json_payload['review']
+    response = requests.post(url, json=data)
+
+    # Checking the response
+    if response.status_code == 200:
+        print("POST request was successful!")
+        print("Response:", response.json())
+    else:
+        print("POST request failed with status code:", response.status_code)
+        print("Response:", response.text)
     json_data = json.loads(response.text)
     return json_data
-
 
 def get_request(url, **kwargs):
     print(kwargs)
@@ -94,7 +91,7 @@ def get_dealer_reviews_from_cf(url,dealer_id, **kwargs):
 def analyze_review_sentiments(dealerreview):
 
     url = "https://api.au-syd.natural-language-understanding.watson.cloud.ibm.com/instances/db7ddfa4-a0ad-42f1-ae80-fed8e799e08f/v1/analyze?version=2022-04-07"
-    api_key = ""
+    api_key = "cGfuZXrcdC8nDv3oqb7WYWZdeWG144_eMc9dd1J2UbiT"
     headers = {
         "Content-Type": "application/json",
     }

@@ -126,6 +126,7 @@ def get_dealer_details(request, dealer_id):
             context[review.id]={"review":review.review,"car_make":review.car_make,"car_model":review.car_model,"car_year":review.car_year,"sentiment":review.sentiment}
         context['context'] = context
         context ['dealer'] = dealer_name
+        context ['dealer_id'] = dealer_id
         print(context)
         return render(request, 'djangoapp/dealer_details.html', context)
 
