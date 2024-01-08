@@ -65,14 +65,14 @@
                     <label for="car" class="form-label"><b>Select your car (model-make-year):</b> </label>
                     <select name="car" id="car" class="form-select" required>
                         {% for car in cars %}
-                            <option selected value={{car.id}}>{{car.name}}-{{car.make.name}}-{{ car.year|date:"Y" }}</option>
+                            <option selected value={{car.id}}>{{car.name}}-{{car.carModels.name}}-{{ car.year|date:"Y" }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <!-- Purchase Date -->
                 <div class="mb-3">
                     <label for="purchasedate"><b>Select Your Purchase Date: </b></label>
-                    <input class="date-own form-control" style="width: 300px;" type="text" name="purchasedate" id="purchasedate">
+                    <input class="date-own form-control" style="width: 300px;" type="date" name="purchasedate" id="purchasedate">
                 </div>
 
                 <!-- Submit Button -->
